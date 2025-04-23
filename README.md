@@ -5,7 +5,7 @@ Zephyr implementation of UWB ranging demo using Zephyr RTOS
 ## Overview
 
 This project is the Zephyr implementation of Insight SiP UWB ranging demo.
-This is compatible with ISP3080-UX and ISP3580-UW modules.
+This is compatible with ISP3080-UX modules.
 For more information go to:
 https://www.insightsip.com/products/uwb-aoa-modules
 
@@ -28,8 +28,6 @@ Build the application for the the board you are using:
 ```shell
 west build -b isp3080_ux_tg -- -DBOARD_ROOT="." -DCONF_FILE="prj_release.conf"
 west build -b isp3080_ux_an -- -DBOARD_ROOT="." -DCONF_FILE="prj_release.conf"
-west build -b isp3580_ux_tg/nrf54l15/cpuapp -- -DBOARD_ROOT="." -DCONF_FILE="prj_release.conf"
-west build -b isp3580_ux_an/nrf54l15/cpuapp  -- -DBOARD_ROOT="." -DCONF_FILE="prj_release.conf"
 ```
 
 Flash the device:
