@@ -1,0 +1,10 @@
+identifier: isp3080_ux_an/nrf52833
+name: Insight SiP ISP3080-UX Anchor
+vendor: insightsip
+type: mcu
+arch: arm
+ram: 128
+flash: 512
+toolchain:
+  - zephyr
+supported: []

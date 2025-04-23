@@ -1,0 +1,18 @@
+
+menu "Motion"
+
+config ISP_MOTION
+	bool "Enable motion module"
+	help
+	  This option enables accelerometer.
+
+
+if ISP_MOTION
+
+module = ISP_MOTION
+module-str = motion
+source "subsys/logging/Kconfig.template.log_config"
+
+endif
+
+endmenu

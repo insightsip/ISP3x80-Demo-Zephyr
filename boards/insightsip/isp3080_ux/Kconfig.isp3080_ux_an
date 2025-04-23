@@ -1,0 +1,2 @@
+config BOARD_ISP3080_UX_AN
+	select SOC_NRF52833_QIAA

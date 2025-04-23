@@ -1,0 +1,16 @@
+#
+# Copyright (c) 2018 Nordic Semiconductor
+#
+# SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
+#
+
+menu "Application modules"
+
+rsource "Kconfig.twr"
+rsource "Kconfig.ble_range_service"
+rsource "Kconfig.battery_meas"
+rsource "Kconfig.motion"
+rsource "Kconfig.leds_ctrl"
+rsource "Kconfig.watchdog"
+
+endmenu

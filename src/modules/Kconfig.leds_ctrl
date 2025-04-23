@@ -1,0 +1,13 @@
+
+menu "LEDS"
+
+config ISP_LEDS_CTRL
+	bool "Enable LEDS control"
+	help
+	  This option enables LEDS control.
+
+module = ISP_LED_CTRL
+module-str = LED control
+source "subsys/logging/Kconfig.template.log_config"
+
+endmenu

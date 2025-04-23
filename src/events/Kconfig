@@ -1,0 +1,45 @@
+#
+# Copyright (c) 2019 Nordic Semiconductor
+#
+# SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
+#
+
+if LOG
+
+menu "Event options"
+
+comment "Logged events"
+
+config ISP_LOG_TWR_RANGE_EVENT
+	bool "Log twr range events"
+	default y
+	help
+	  Log twr range events.
+	  
+config ISP_LOG_TWR_ERROR_EVENT
+	bool "Log twr error events"
+	default y
+	help
+	  Log twr error events.	  
+
+config ISP_LOG_BATTERY_STATE_EVENT
+	bool "Log battery state events"
+	default y
+	help
+	  Log battery state events.
+
+config ISP_LOG_BATTERY_LEVEL_EVENT
+	bool "Log battery level events"
+	default y
+	help
+	  Log battery level events.
+
+config ISP_LOG_MOTION_ACCEL_EVENT
+	bool "Log accelerometer events"
+	default y
+	help
+	  Log accelerometer events.
+
+endmenu
+
+endif

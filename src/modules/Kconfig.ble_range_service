@@ -1,0 +1,10 @@
+menu "BLE Range Service"
+
+config ISP_BLE_RANGE_SERVICE
+	bool "Enable BLE Range Sevice"
+	depends on BT_PERIPHERAL
+	help
+	  This option enables GATT Range Service application
+	  module.
+
+endmenu

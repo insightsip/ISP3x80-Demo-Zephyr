@@ -1,0 +1,15 @@
+boards:
+  - name: isp3580_ux_tg
+    vendor: insightsip
+    socs:
+    - name: nrf54l15
+      variants:
+      - name: xip
+        cpucluster: 
+  - name: isp3580_ux_an
+    vendor: insightsip
+    socs:
+    - name: nrf54l15
+      variants:
+      - name: xip
+        cpucluster: cpuflpr

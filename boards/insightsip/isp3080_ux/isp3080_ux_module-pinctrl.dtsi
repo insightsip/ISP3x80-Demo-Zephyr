@@ -1,0 +1,34 @@
+&pinctrl {
+	spi3_default: spi3_default {
+		group1 {
+			psels = <NRF_PSEL(SPIM_SCK, 0, 19)>,
+				<NRF_PSEL(SPIM_MISO, 0, 13)>,
+				<NRF_PSEL(SPIM_MOSI, 0, 16)>;
+		};
+	};
+
+	spi3_sleep: spi3_sleep {
+		group1 {
+			psels = <NRF_PSEL(SPIM_SCK, 0, 19)>,
+				<NRF_PSEL(SPIM_MISO, 0, 13)>,
+				<NRF_PSEL(SPIM_MOSI, 0, 16)>;
+			low-power-enable;
+		};
+	};
+
+	/omit-if-no-ref/ i2c0_default: i2c0_default {
+		group1 {
+			psels = <NRF_PSEL(TWIM_SCL, 1, 7)>,
+					<NRF_PSEL(TWIM_SDA, 1, 2)>;
+			bias-pull-up;
+		};
+	};
+
+	/omit-if-no-ref/ i2c0_sleep: i2c0_sleep {
+		group1 {
+			psels = <NRF_PSEL(TWIM_SCL, 1, 7)>,
+					<NRF_PSEL(TWIM_SDA, 1, 2)>;
+			low-power-enable;
+		};
+	};
+};

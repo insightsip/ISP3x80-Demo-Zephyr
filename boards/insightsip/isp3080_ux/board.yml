@@ -1,0 +1,9 @@
+boards:
+  - name: isp3080_ux_tg
+    vendor: insightsip
+    socs:
+      - name: nrf52833
+  - name: isp3080_ux_an
+    vendor: insightsip
+    socs:
+      - name: nrf52833

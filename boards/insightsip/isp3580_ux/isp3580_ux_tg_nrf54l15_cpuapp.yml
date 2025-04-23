@@ -1,0 +1,10 @@
+identifier: isp3580_ux_tg/nrf54l15/cpuapp
+name: Insight SiP ISP3580-UX Tag(Application MCU)
+vendor: insightsip
+arch: arm
+toolchain:
+  - zephyr
+sysbuild: true
+ram: 188
+flash: 324
+supported: []

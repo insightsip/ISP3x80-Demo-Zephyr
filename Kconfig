@@ -1,0 +1,12 @@
+menu "ISP3x80 Demo"
+rsource "src/modules/Kconfig"
+rsource "src/events/Kconfig"
+endmenu
+
+menu "Zephyr Kernel"
+source "Kconfig.zephyr"
+endmenu
+
+config ISP_VERSION
+  string "version"
+  default "$(VERSION_MAJOR).$(VERSION_MINOR).$(PATCHLEVEL)"

@@ -1,0 +1,26 @@
+
+menu "Two-Way Ranging"
+
+config ISP_TWR
+	bool "Enable Two-Way Ranging"
+	help
+	  This option enables two-way ranging operations using UWB technology.
+
+choice ISP_TWR_ROLE
+	bool "Select TWR role"
+	default ISP_TWR_INITIATOR
+	help
+	  This option let you choose wich TWR role to use.
+
+config ISP_TWR_INITIATOR
+	bool "Set TWR role as initiator"
+
+config ISP_TWR_RESPONDER
+	bool "Set TWR role as responder"
+endchoice
+
+config ISP_TWR_FRAME_FILTERING
+	bool "Enable frame filtering for Two-Way Ranging"
+	help
+	  This option enables frame filtering for two-way ranging operations.
+endmenu

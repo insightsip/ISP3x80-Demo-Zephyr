@@ -1,0 +1,54 @@
+/dts-v1/;
+#include <nordic/nrf54l15_cpuapp.dtsi>
+#include "isp3580_ux_tg-pinctrl.dtsi"
+#include "isp3580_ux_module.dtsi"
+#include "isp3580_ux_module-pinctrl.dtsi"
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+	model = "Insight SiP ISP3580-UX Tag (Application MCU)";
+	compatible = "insightsip,isp3580-ux-tg-cpuapp";
+	
+	aliases {
+		greenled = &led0;
+		redled = &led1;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		status = "okay";
+	
+		led0: led_0 {
+				gpios = <&gpio2 0 GPIO_ACTIVE_HIGH>;
+				label = "Green LED";
+		};
+
+		led1: led_1 {
+			gpios = <&gpio1 13 GPIO_ACTIVE_HIGH>;
+			label = "Red LED";
+		};
+	};
+
+	curr_mode_pin: gpio-power-pin {
+		compatible = "regulator-fixed";
+		regulator-name = "current_mode";
+		enable-gpios = <&gpio2 2 GPIO_ACTIVE_HIGH>;
+	};
+};
+
+&adc {
+	status = "okay";
+
+	#address-cells = <1>;
+    #size-cells = <0>;
+
+	channel@0 {
+		reg = <0>;
+     	zephyr,gain = "ADC_GAIN_1_4";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS, 10)>;
+	    zephyr,input-positive = <NRF_SAADC_AIN0>;
+	};
+
+
+};
