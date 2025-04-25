@@ -53,7 +53,7 @@ In nRF Connect extension, **ISP3x80-Demo-Zephyr** should appear as an applicatio
 
 Click **Add build configuration** and select your target.  
 For example choose **isp3080_ux_tg/nrf52833** to build the application for the ISP3080 Tag.  
-By default it will build n debug mode. To build as release mode click on **Add Argument** and put
+By default it will build in debug mode. To build in release mode click on **Add Argument** and put
 
 ```shell
 -- -DCONF_FILE=prj_release.conf
