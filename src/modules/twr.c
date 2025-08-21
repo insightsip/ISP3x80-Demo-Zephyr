@@ -21,6 +21,8 @@
 #define MODULE twr
 #include <app_event_manager.h>
 #include <caf/events/module_state_event.h>
+#include "dfu_module_event.h"
+#include "dfu_module.h"
 #include "twr_event.h"
 #include "config_event.h"
 #include "deca_device_api.h"
@@ -82,9 +84,9 @@ LOG_MODULE_REGISTER(MODULE);
 #define MAX_USER_PAYLOAD_STRING_LS (STANDARD_FRAME_SIZE - FRAME_CRTL_AND_ADDRESS_LS - TAG_FINAL_MSG_LEN - FRAME_CRC) // 127 - 15 - 16 - 2 = 94
 
 /* Delay between frames, in UWB microseconds. Should be fine tuned to optimize consumption */
-#define POLL_RX_TO_RESP_TX_DLY_UUS 850 //650 /**< delay from Frame RX timestamp to TX reply timestamp. */
+#define POLL_RX_TO_RESP_TX_DLY_UUS 1050 //650 /**< delay from Frame RX timestamp to TX reply timestamp. */
 #define POLL_TX_TO_RESP_RX_DLY_UUS 350 /**< Delay from the end of the frame transmission to the enable of the receiver. */
-#define RESP_RX_TIMEOUT_UUS 600	 //400  /**< Receive response timeout. */
+#define RESP_RX_TIMEOUT_UUS 800	 //400  /**< Receive response timeout. */
 
 #define SPEED_OF_LIGHT 299702547 /**< Speed of light in air, in metres per second. */
 
@@ -316,7 +318,7 @@ static void cb_rx_ok(const dwt_cb_data_t *rxd)
 		// unexpected frame control
 		if (twr_role == TWR_ROLE_RESPONDER)
 		{
-			dwt_rxenable(DWT_START_RX_IMMEDIATE);
+			//dwt_rxenable(DWT_START_RX_IMMEDIATE);
 		}
 		else
 		{
@@ -591,6 +593,16 @@ void twr_run(void *p1, void *p2, void *p3)
 
 static void twr_start(void)
 {
+	// Tag boards have dedicated supply circuit
+#if DT_NODE_EXISTS(DT_NODELABEL(curr_mode_pin))
+	const struct device *curr_mode_dev = DEVICE_DT_GET(DT_NODELABEL(curr_mode_pin));
+	if (!device_is_ready(curr_mode_dev))
+	{
+		return ;
+	}
+	regulator_enable(curr_mode_dev);
+#endif
+
 	msgq_data_t evt;
 	evt.type = TWR_START;
 	msgq_put_item(evt);
@@ -599,6 +611,15 @@ static void twr_start(void)
 
 static void twr_stop(void)
 {
+	// Tag boards have dedicated supply circuit
+#if DT_NODE_EXISTS(DT_NODELABEL(curr_mode_pin))
+	const struct device *curr_mode_dev = DEVICE_DT_GET(DT_NODELABEL(curr_mode_pin));
+	if (!device_is_ready(curr_mode_dev))
+	{
+		return ;
+	}
+	regulator_disable(curr_mode_dev);
+#endif
 	msgq_data_t evt;
 	evt.type = TWR_STOP;
 	msgq_put_item(evt);
@@ -606,6 +627,7 @@ static void twr_stop(void)
 
 static int twr_init(void)
 {
+	dfu_module_init();
 	dw_hw_init();
 	dw_hw_reset();
 	k_msleep(2);
@@ -747,7 +769,7 @@ static int twr_init(void)
 	{
 		return -ENODEV;
 	}
-	regulator_enable(curr_mode_dev);
+	regulator_disable(curr_mode_dev);
 #endif
 
 	// Start TWR operations
@@ -814,6 +836,24 @@ static bool app_event_handler(const struct app_event_header *aeh)
 		return false;
 	}
 
+
+	if (is_dfu_ctrl_event(aeh))
+	{
+		struct dfu_ctrl_event *event = cast_dfu_ctrl_event(aeh);
+		if (event->op_enable)
+		{
+			twr_start();
+			enabled = true;
+		}
+		else
+		{
+			twr_stop();
+			enabled = false;
+		}
+
+		return false;
+	}
+
 	/* If event is unhandled, unsubscribe. */
 	__ASSERT_NO_MSG(false);
 
@@ -823,3 +863,4 @@ static bool app_event_handler(const struct app_event_header *aeh)
 APP_EVENT_LISTENER(MODULE, app_event_handler);
 APP_EVENT_SUBSCRIBE_FINAL(MODULE, module_state_event);
 APP_EVENT_SUBSCRIBE(MODULE, twr_config_event);
+APP_EVENT_SUBSCRIBE(MODULE, dfu_ctrl_event);

@@ -61,3 +61,8 @@ By default it will build n debug mode. To build as release mode click on **Add A
 
 After a successful build click on **flash** to program the device.
 
+Last version is 2.1.0 it is a zephyr based application, with DFU possibility using MCUboot.
+This version is release with nRF connect SDK version 2.9.0.
+Version 3.0.0 of nRF connect SDK has been tested, it is functionnal but the non volatile memory requirement is higher thus this release is kept with SDK 2.9.0.
+The SDK 3.1.0 does not build as non volatile memory requirement has increased again with this new revision.
+
