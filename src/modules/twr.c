@@ -109,10 +109,10 @@ LOG_MODULE_REGISTER(MODULE);
 #define OTP_ALT_EUID_ADDR_L 0x02 /**< First 4 Bytes of alternative 64 bit EUID OTP address */
 #define OTP_ALT_EUID_ADDR_H 0x03 /**< Last 4 Bytes of alternative 64 bit EUID OTP address */
 // Reserved
-#define OTP_CH5_ANT_DLY_ADDR 0x10 /**< Channel 5 antenna delay OTP address */
-#define OTP_CH9_ANT_DLY_ADDR 0x11 /**< Channel 9 antenna delay OTP address */
-#define OTP_CUST12_ADDR 0x12	  /**< Customer OTP address */
-#define OTP_CUST13_ADDR 0x13	  /**< Customer OTP address */
+#define OTP_CH5_TX_ANT_DLY_ADDR 0x10 /**< Channel 5 antenna delay OTP address */
+#define OTP_CH5_RX_ANT_DLY_ADDR 0x11 /**< Channel 5 antenna delay OTP address */
+#define OTP_CH9_TX_ANT_DLY_ADDR 0x12 /**< Channel 9 antenna delay OTP address */
+#define OTP_CH9_RX_ANT_DLY_ADDR 0x13 /**< Channel 9 antenna delay OTP address */
 #define OTP_CH5_PWR_ADDR 0x14	  /**< Channel 5 TX Power OTP address */
 #define OTP_CH9_PWR_ADDR 0x15	  /**< Channel 9 TX Powe OTP address */
 #define OTP_CUST16_ADDR 0x16	  /**< Customer OTP address */
@@ -693,15 +693,15 @@ static int twr_init(void)
 	// Configure antenna delays
 	if (uwb_config.chan == 5)
 	{
-		rx_ant_dly = otp_memory[OTP_CH5_ANT_DLY_ADDR] != EMPTY_OTP_VAL ? (otp_memory[OTP_CH5_ANT_DLY_ADDR] >> 16) & 0xFFFF : DEFAULT_RX_ANT_DLY;
-		tx_ant_dly = otp_memory[OTP_CH5_ANT_DLY_ADDR] != EMPTY_OTP_VAL ? otp_memory[OTP_CH5_ANT_DLY_ADDR] & 0xFFFF : DEFAULT_TX_ANT_DLY;
+		rx_ant_dly = otp_memory[OTP_CH5_RX_ANT_DLY_ADDR] != EMPTY_OTP_VAL ? otp_memory[OTP_CH5_RX_ANT_DLY_ADDR] & 0xFFFF : DEFAULT_RX_ANT_DLY;
+		tx_ant_dly = otp_memory[OTP_CH5_TX_ANT_DLY_ADDR] != EMPTY_OTP_VAL ? otp_memory[OTP_CH5_TX_ANT_DLY_ADDR] & 0xFFFF : DEFAULT_TX_ANT_DLY;
 		dwt_setrxantennadelay(rx_ant_dly);
 		dwt_settxantennadelay(tx_ant_dly);
 	}
 	else if (uwb_config.chan == 9)
 	{
-		rx_ant_dly = otp_memory[OTP_CH9_ANT_DLY_ADDR] != EMPTY_OTP_VAL ? (otp_memory[OTP_CH9_ANT_DLY_ADDR] >> 16) & 0xFFFF : DEFAULT_RX_ANT_DLY;
-		tx_ant_dly = otp_memory[OTP_CH9_ANT_DLY_ADDR] != EMPTY_OTP_VAL ? otp_memory[OTP_CH9_ANT_DLY_ADDR] & 0xFFFF : DEFAULT_TX_ANT_DLY;
+		rx_ant_dly = otp_memory[OTP_CH9_RX_ANT_DLY_ADDR] != EMPTY_OTP_VAL ? otp_memory[OTP_CH9_RX_ANT_DLY_ADDR] & 0xFFFF : DEFAULT_RX_ANT_DLY;
+		tx_ant_dly = otp_memory[OTP_CH9_TX_ANT_DLY_ADDR] != EMPTY_OTP_VAL ? otp_memory[OTP_CH9_TX_ANT_DLY_ADDR] & 0xFFFF : DEFAULT_TX_ANT_DLY;
 		dwt_setrxantennadelay(rx_ant_dly);
 		dwt_settxantennadelay(tx_ant_dly);
 	}
